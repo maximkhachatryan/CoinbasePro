@@ -29,9 +29,10 @@ namespace CoinBaseRecorder
 
             SavePeriodically();
 
-            Console.ReadKey();
+            Console.ReadLine();
 
             webSocket.Stop();
+            _context.SaveChanges();
         }
 
         static void WebSocket_OnTickerReceived(object sender, WebfeedEventArgs<Ticker> e)

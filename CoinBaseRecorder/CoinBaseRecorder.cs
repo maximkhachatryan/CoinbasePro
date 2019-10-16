@@ -23,8 +23,6 @@ namespace CoinBaseRecorder
             var coinbaseProClient = new CoinbasePro.CoinbaseProClient();
             _webSocket = coinbaseProClient.WebSocket;
             _webSocket.OnTickerReceived += WebSocket_OnTickerReceived;
-
-            Console.WriteLine(_webSocket.State);
         }
 
         public void StartRecording()
@@ -35,7 +33,7 @@ namespace CoinBaseRecorder
             SavePeriodically();
         }
 
-        private void WebSocket_OnTickerReceived(object sender, WebfeedEventArgs<Ticker> e)
+        void WebSocket_OnTickerReceived(object sender, WebfeedEventArgs<Ticker> e)
         {
             var priceChangeObj = new PriceChange
             {
@@ -48,7 +46,7 @@ namespace CoinBaseRecorder
             Console.WriteLine(priceChangeObj.Time.ToString() + '\t' + priceChangeObj.ProdId + '\t' + priceChangeObj.Price);
         }
 
-        private void SavePeriodically()
+        void SavePeriodically()
         {
             Task.Run(() =>
             {
@@ -59,6 +57,8 @@ namespace CoinBaseRecorder
                 }
             });
         }
+
+        #region IDisposable
 
         bool disposed = false;
 
@@ -73,5 +73,6 @@ namespace CoinBaseRecorder
             }
             GC.SuppressFinalize(this);
         }
+        #endregion
     }
 }

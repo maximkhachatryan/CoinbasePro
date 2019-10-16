@@ -4,7 +4,7 @@ namespace CoinBaseRecorder
 {
     class Program
     {
-        private static void Main(string[] args)
+        static void Main(string[] args)
         {
             using (var recorder = new CoinBaseRecorder())
             {

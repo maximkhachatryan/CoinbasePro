@@ -6,7 +6,6 @@ using CoinBaseRecorder.DAL.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -14,12 +13,12 @@ namespace CoinBaseRecorder
 {
     class Program
     {
-        static CoinBaseContext _context = new CoinBaseContext();
-        static void Main(string[] args)
+        private static readonly CoinBaseContext _context = new CoinBaseContext();
+
+        private static void Main(string[] args)
         {
             var coinbaseProClient = new CoinbasePro.CoinbaseProClient();
 
-            //use the websocket feed
             var productTypes = Enum.GetValues(typeof(ProductType)).Cast<ProductType>().ToList();
             var channels = new List<ChannelType>() { ChannelType.Ticker }; // When not providing any channels, the socket will subscribe to all channels
 
@@ -35,7 +34,7 @@ namespace CoinBaseRecorder
             _context.SaveChanges();
         }
 
-        static void WebSocket_OnTickerReceived(object sender, WebfeedEventArgs<Ticker> e)
+        private static void WebSocket_OnTickerReceived(object sender, WebfeedEventArgs<Ticker> e)
         {
             var priceChangeObj = new PriceChange
             {
@@ -48,7 +47,7 @@ namespace CoinBaseRecorder
             Console.WriteLine(priceChangeObj.Time.ToString() + '\t' + priceChangeObj.ProdId + '\t' + priceChangeObj.Price);
         }
 
-        static void SavePeriodically()
+        private static void SavePeriodically()
         {
             Task.Run(() =>
             {

@@ -7,13 +7,13 @@ namespace CoinBaseRecorder.DAL.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.3.0")]
-    public sealed partial class InitialCreate : IMigrationMetadata
+    public sealed partial class Initial_Create : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(InitialCreate));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Initial_Create));
         
         string IMigrationMetadata.Id
         {
-            get { return "201910162003238_InitialCreate"; }
+            get { return "201910162204243_Initial_Create"; }
         }
         
         string IMigrationMetadata.Source

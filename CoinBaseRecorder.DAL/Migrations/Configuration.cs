@@ -10,7 +10,6 @@
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
-            ContextKey = "CoinBaseRecorder.DAL.CoinBaseContext";
         }
 
         protected override void Seed(CoinBaseRecorder.DAL.CoinBaseContext context)

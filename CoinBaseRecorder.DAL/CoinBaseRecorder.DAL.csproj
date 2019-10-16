@@ -53,13 +53,9 @@
   <ItemGroup>
     <Compile Include="CoinBaseContext.cs" />
     <Compile Include="Entities\PriceChange.cs" />
-    <Compile Include="Migrations\201910162003238_InitialCreate.cs" />
-    <Compile Include="Migrations\201910162003238_InitialCreate.designer.cs">
-      <DependentUpon>201910162003238_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201910162130533_Add_NonClustered_index.cs" />
-    <Compile Include="Migrations\201910162130533_Add_NonClustered_index.designer.cs">
-      <DependentUpon>201910162130533_Add_NonClustered_index.cs</DependentUpon>
+    <Compile Include="Migrations\201910162204243_Initial_Create.cs" />
+    <Compile Include="Migrations\201910162204243_Initial_Create.designer.cs">
+      <DependentUpon>201910162204243_Initial_Create.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -71,11 +67,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201910162003238_InitialCreate.resx">
-      <DependentUpon>201910162003238_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201910162130533_Add_NonClustered_index.resx">
-      <DependentUpon>201910162130533_Add_NonClustered_index.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201910162204243_Initial_Create.resx">
+      <DependentUpon>201910162204243_Initial_Create.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

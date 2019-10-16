@@ -19,6 +19,7 @@ namespace CoinBaseRecorder.DAL
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<PriceChange>().HasIndex(x => x.Time);
+            modelBuilder.Entity<PriceChange>().HasIndex(x => x.ProdId);
             modelBuilder.Entity<PriceChange>().Property(x => x.Price).HasPrecision(18, 8);
             base.OnModelCreating(modelBuilder);
         }

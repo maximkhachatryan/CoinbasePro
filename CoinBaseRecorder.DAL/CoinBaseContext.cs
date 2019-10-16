@@ -14,7 +14,7 @@ namespace CoinBaseRecorder.DAL
             : base("name=CoinBaseConnString")
         {
         }
-        public virtual DbSet<PriceChange> PriceChange { get; set; }
+        public virtual DbSet<PriceChange> PriceChanges { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

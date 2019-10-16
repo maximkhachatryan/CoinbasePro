@@ -10,7 +10,7 @@ namespace CoinBaseRecorder.DAL.Entities
     {
         public Guid Id { get; set; }
         public int ProdId { get; set; }
-        public double Price { get; set; }
-        public DateTime Time { get; set; }
+        public decimal Price { get; set; }
+        public DateTimeOffset Time { get; set; }
     }
 }

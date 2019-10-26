@@ -13,13 +13,17 @@ namespace CoinBaseRecorder
     {
         static void Main(string[] args)
         {
-            using (ICoinBaseService service = new CoinBaseService(Authentication.ApiKey, Authentication.UnsignedSignature, Authentication.Passphrase, true)) // TODO: use any DI framework and inject services in constructors
+            var useSendBox = false;
+#if DEBUG
+            useSendBox = true;
+#endif
+            using (ICoinBaseService service = new CoinBaseService(Authentication.ApiKey, Authentication.UnsignedSignature, Authentication.Passphrase, useSendBox)) // TODO: use any DI framework and inject services in constructors
             {
                 service.OrderRecieved += OnOrderRecieved;
-                Console.WriteLine("Reading history ...");
+                Console.WriteLine("Reading history. Please wait a while...");
                 service.PullHistoryAsync().Wait();
                 Console.Clear();
-                Console.WriteLine("Recording started...");
+                Console.WriteLine("Recording started.");
                 service.StartRecording();
                 Console.ReadLine();
             }

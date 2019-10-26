@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("CoinBaseRecorder.DAL")]
+[assembly: AssemblyTitle("CoinBaseRecorder.Core")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("CoinBaseRecorder.DAL")]
+[assembly: AssemblyProduct("CoinBaseRecorder.Core")]
 [assembly: AssemblyCopyright("Copyright ©  2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("dbf34935-39bf-4e7b-92e7-b50747aa48a1")]
+[assembly: Guid("0f220614-8ef3-4951-b0d1-30884c22160d")]
 
 // Version information for an assembly consists of the following four values:
 //

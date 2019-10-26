@@ -1,4 +1,9 @@
-﻿using System;
+﻿using CoinBaseRecorder.Core.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace CoinBaseRecorder
 {
@@ -6,12 +11,12 @@ namespace CoinBaseRecorder
     {
         static void Main(string[] args)
         {
-            using (var recorder = new CoinBaseRecorder())
+            using (ICoinBaseService repo = new CoinBaseService()) // TODO: use any DI framework
             {
-                recorder.StartRecording();
+                repo.PullHistoryAsync();
+                repo.StartRecording();
                 Console.ReadLine();
             }
         }
-
     }
 }

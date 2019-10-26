@@ -20,12 +20,9 @@ namespace CoinBaseRecorder.Core.Services
     {
         private readonly CoinBaseContext _context;
         private readonly CoinbaseProClient _client;
-        public CoinBaseService()
+        public CoinBaseService(string apiKey, string unsignedSignature, string passphrase, bool useSendBox = false)
         {
             _context = new CoinBaseContext();
-            var apiKey = "1f2af4297a92164703300f0e12af5c98";
-            var unsignedSignature = "Yhpr47afGAikPYf6ehD8Ha0V52LAJKL8JYGx7gXc7FSyZWSgAB5iuSpFqydSHk61OMADht2bVBHdNk3mJXGDDA==";
-            var passphrase = "fjblqdrfwc4";
             var authenticator = new Authenticator(apiKey, unsignedSignature, passphrase);
             _client = new CoinbaseProClient(authenticator, true);
             //_client = new CoinbaseProClient();

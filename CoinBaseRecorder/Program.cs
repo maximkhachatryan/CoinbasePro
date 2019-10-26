@@ -1,4 +1,5 @@
-﻿using CoinBaseRecorder.Core.Services;
+﻿using CoinBaseRecorder.Constants;
+using CoinBaseRecorder.Core.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,10 +12,10 @@ namespace CoinBaseRecorder
     {
         static void Main(string[] args)
         {
-            using (ICoinBaseService repo = new CoinBaseService()) // TODO: use any DI framework
+            using (ICoinBaseService service = new CoinBaseService(Authentication.ApiKey, Authentication.UnsignedSignature, Authentication.Passphrase)) // TODO: use any DI framework and inject services in constructors
             {
-                repo.PullHistoryAsync();
-                repo.StartRecording();
+                service.PullHistoryAsync().Wait();
+                service.StartRecording();
                 Console.ReadLine();
             }
         }

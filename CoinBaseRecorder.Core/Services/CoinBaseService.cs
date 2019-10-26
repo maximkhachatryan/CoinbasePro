@@ -6,8 +6,10 @@ using CoinbasePro.Shared.Types;
 using CoinbasePro.WebSocket.Models.Response;
 using CoinbasePro.WebSocket.Types;
 using CoinBaseRecorder.Core.Entities;
+using CoinBaseRecorder.Core.EventResponseModels;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -20,12 +22,13 @@ namespace CoinBaseRecorder.Core.Services
     {
         private readonly CoinBaseContext _context;
         private readonly CoinbaseProClient _client;
+        public event EventHandler<OrderRecievedEventArgs> OrderRecieved;
         public CoinBaseService(string apiKey, string unsignedSignature, string passphrase, bool useSendBox = false)
         {
             _context = new CoinBaseContext();
             var authenticator = new Authenticator(apiKey, unsignedSignature, passphrase);
-            _client = new CoinbaseProClient(authenticator, true);
             //_client = new CoinbaseProClient();
+            _client = new CoinbaseProClient(authenticator, useSendBox);
             _client.WebSocket.OnTickerReceived += WebSocket_OnTickerReceived;
         }
 
@@ -41,34 +44,30 @@ namespace CoinBaseRecorder.Core.Services
         {
             _context.HistoricalPriceChanges.RemoveRange(_context.HistoricalPriceChanges);
             var productTypes = Enum.GetValues(typeof(ProductType)).Cast<ProductType>().ToList();
-            //productTypes.Remove(ProductType.Unknown);
+            productTypes.Remove(ProductType.Unknown);
             foreach (var prodType in productTypes)
             {
-                //try
-                //{
-                var result = await _client.ProductsService.GetHistoricRatesAsync(prodType, DateTime.MinValue, DateTime.Today.AddDays(1), CandleGranularity.Hour24);
-
-                var list = result.Select(x => new HistoricalPriceChange
+                try
                 {
-                    Id = Guid.NewGuid(),
-                    Price_Close = x.Close,
-                    Price_High = x.High,
-                    Price_Low = x.Low,
-                    Price_Open = x.Open,
-                    ProdId = (int)prodType,
-                    Time = x.Time,
-                    Volume = x.Volume
-                });
-                _context.HistoricalPriceChanges.AddRange(list);
-                //}
-                //catch (AggregateException ex)
-                //{
-                //    if (ex.InnerException.GetType() == typeof(CoinbaseProHttpException) && ex.InnerException.Message == "NotFound")
-                //        continue;
-                //    else
-                //        throw;
-                //}
+                    var result = await _client.ProductsService.GetHistoricRatesAsync(prodType, DateTime.MinValue, DateTime.Today.AddDays(1), CandleGranularity.Hour24);
 
+                    var list = result.Select(x => new HistoricalPriceChange
+                    {
+                        Id = Guid.NewGuid(),
+                        Price_Close = x.Close,
+                        Price_High = x.High,
+                        Price_Low = x.Low,
+                        Price_Open = x.Open,
+                        ProdId = (int)prodType,
+                        Time = x.Time,
+                        Volume = x.Volume
+                    });
+                    _context.HistoricalPriceChanges.AddRange(list);
+                }
+                catch (CoinbaseProHttpException ex)
+                {
+                    Debug.WriteLine(prodType.ToString() + " EX:" + ex.Message);
+                }
             }
             await _context.SaveChangesAsync();
         }
@@ -84,7 +83,7 @@ namespace CoinBaseRecorder.Core.Services
                 Time = e.LastOrder.Time
             };
             _context.PriceChanges.Add(priceChangeObj);
-            Console.WriteLine(priceChangeObj.Time.ToString() + '\t' + e.LastOrder.ProductId + '\t' + priceChangeObj.Price);
+            OrderRecieved.Invoke(this, new OrderRecievedEventArgs(e.LastOrder.Time, e.LastOrder.ProductId.ToString(), e.LastOrder.Price));
         }
 
         private void SavePeriodically()

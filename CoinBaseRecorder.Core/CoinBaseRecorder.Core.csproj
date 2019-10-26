@@ -144,6 +144,7 @@
     <Compile Include="CoinBaseContext.cs" />
     <Compile Include="Entities\HistoricalPriceChange.cs" />
     <Compile Include="Entities\PriceChange.cs" />
+    <Compile Include="EventResponseModels\OrderRecievedEventArgs.cs" />
     <Compile Include="Migrations\201910260949023_Initial_Create.cs" />
     <Compile Include="Migrations\201910260949023_Initial_Create.designer.cs">
       <DependentUpon>201910260949023_Initial_Create.cs</DependentUpon>

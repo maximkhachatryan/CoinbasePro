@@ -64,9 +64,9 @@ namespace CoinBaseRecorder.Core.Services
                     });
                     _context.HistoricalPriceChanges.AddRange(list);
                 }
-                catch (CoinbaseProHttpException ex)
+                catch (CoinbaseProHttpException ex)//There can be exceptions when using SandBox authentication. Exceptions are caused by the fact that some productsTypes don't exist in the sandbox database.
                 {
-                    Debug.WriteLine(prodType.ToString() + " EX:" + ex.Message);
+                    Debug.WriteLine(prodType.ToString() + " EX: " + ex.Message);
                 }
             }
             await _context.SaveChangesAsync();
